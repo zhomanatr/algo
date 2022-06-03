@@ -22,5 +22,42 @@ def find2Max_ya(seq):
 
     return (max1, max2)
 
-a = find2Max_ya([2,3,3,5,1,5,2,3,1])
+# Моя реализация
+def findMinEven(seq):
+    ans = seq[0]
+
+    for i in range(1, len(seq)):
+        if seq[i] % 2 == 0 and seq[i] < ans:
+            ans = seq[i]
+
+    if ans % 2 == 0:
+        return ans
+    else:
+        return -1
+
+# Реализация учителя
+def findMinEven_ya(seq):
+    ans = -1
+    flag = False
+
+    for i in range(len(seq)):
+        if seq[i] % 2 == 0 and (not flag or seq[i] < ans):
+            ans = seq[i]
+            flag = True
+    return ans
+
+# Реализация учителя
+def printMinWords(text):
+    minLen = len(text[0])
+
+    for word in text:
+        if len(word) < minLen:
+            minLen = len(word)
+    ans = []
+    for word in text:
+        if len(word) == minLen:
+            ans.append(word)
+    return ' '.join(ans)
+
+a = printMinWords(['aaaaaa', 'bb', 'bbb', 'ccc', 'dd'])
 print(a)
