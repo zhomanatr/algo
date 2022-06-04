@@ -59,5 +59,64 @@ def printMinWords(text):
             ans.append(word)
     return ' '.join(ans)
 
-a = printMinWords(['aaaaaa', 'bb', 'bbb', 'ccc', 'dd'])
+
+# Моя реализация
+def reduceStr(text):
+    reducedStr = []
+    symbol_count = 0
+    cur_symbol = text[0]
+
+    for symbol in text:
+        if symbol == cur_symbol:
+            symbol_count += 1
+        else:
+            if symbol_count == 1:
+                reducedStr.append(cur_symbol)
+                cur_symbol = symbol
+                symbol_count = 1
+            else:
+                reducedStr.append(cur_symbol + str(symbol_count))
+                cur_symbol = symbol
+                symbol_count = 1
+
+    reducedStr.append(cur_symbol + str(symbol_count) if symbol_count > 1 else '')
+
+    return ''.join(reducedStr)
+
+
+# Реализация учителя
+# собираем просто символы из текста
+def collectSymbols(text):
+    lastSym = text[0]
+    ans = []
+
+    for i in range(len(text)):
+        if text[i] != lastSym:
+            ans.append(lastSym)
+            lastSym = text[i]
+    ans.append(lastSym)
+    return ''.join(ans)
+
+# Собираем символы с их кол-вом
+def collectSymWithCnt(text):
+    def pack(s, cnt):
+        if cnt > 1:
+            return s + str(cnt)
+        return s
+
+    lastSym = text[0]
+    lastPos = 0
+    ans = []
+
+    for i in range(len(text)):
+        if text[i] != lastSym:
+            ans.append(pack(text[lastPos], i - lastPos))
+            lastSym = text[i]
+            lastPos = i
+
+    ans.append(pack(text[lastPos], len(text) - lastPos))
+
+    return ''.join(ans)
+
+a = collectSymWithCnt('AAAAABBBBBBCDDDDDDAAAAABBBBB')
 print(a)
